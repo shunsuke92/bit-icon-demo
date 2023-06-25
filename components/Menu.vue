@@ -5,7 +5,7 @@
     @click="handleClick"
   >
     <div
-      class="p-6 bg-gray-100 dark:bg-gray-800 shadow dark:shadow-none shadow-gray-700 rounded-lg border-0 dark:border border-gray-600"
+      class="p-6 -translate-y-10 bg-gray-100 dark:bg-gray-800 shadow dark:shadow-none shadow-gray-700 rounded-lg border-0 dark:border border-gray-600"
       :class="optionClass"
       @click.stop
     >
