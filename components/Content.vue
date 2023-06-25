@@ -1,5 +1,5 @@
 <template>
-  <div class="p-12">
+  <div class="px-5 sm:px-12 py-12">
     <div
       class="grid"
       :class="

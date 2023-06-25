@@ -15,12 +15,25 @@
 </template>
 
 <script setup lang="ts">
+  import { backgroundFixed } from '~/utils/backgroundFixed';
+
   interface Props {
     open: boolean;
     optionClass?: string;
   }
 
-  defineProps<Props>();
+  const props = defineProps<Props>();
+
+  watch(
+    () => props.open,
+    (value) => {
+      if (value) {
+        backgroundFixed(true);
+      } else {
+        backgroundFixed(false);
+      }
+    },
+  );
 
   const emit = defineEmits<{ (e: 'close', value: void): void }>();
   const handleClick = () => {
