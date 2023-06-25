@@ -23,19 +23,39 @@
         </div>
         <div class="flex flex-col gap-1">
           <div class="text-gray-800 dark:text-gray-200">Size</div>
-          <input type="number" v-model="size" class="input w-24" />
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              v-model="size"
+              class="input w-20"
+              :class="isOversize && 'border-red-600 focus:border-red-600  focus:ring-red-600'"
+            />
+            <span v-if="isOversize" class="Class Properties text-sm text-red-600"
+              >{{ MAX_SIZE }}以下で入力してください</span
+            >
+          </div>
         </div>
         <div class="flex flex-col gap-1">
           <div class="text-gray-800 dark:text-gray-200">Download</div>
           <div class="flex gap-4">
-            <Button type="fill" @click="handleClickDownloadSvg">
-              <div class="flex gap-3 text-gray-800 dark:text-gray-200 pl-4 pr-5">
-                <DownloadIcon />SVG
+            <Button
+              type="fill"
+              :disabled="isOversize"
+              @click="handleClickDownloadSvg"
+              class="text-gray-800 disabled:text-gray-800/50 dark:text-gray-200 dark:disabled:text-gray-200/50"
+            >
+              <div class="flex gap-3 pl-4 pr-5">
+                <DownloadIcon :class="isOversize ? 'disabled' : ''" />SVG
               </div>
             </Button>
-            <Button type="fill" @click="handleClickDownloadPng">
-              <div class="flex gap-3 text-gray-800 dark:text-gray-200 pl-4 pr-5">
-                <DownloadIcon />PNG
+            <Button
+              type="fill"
+              :disabled="isOversize"
+              @click="handleClickDownloadPng"
+              class="text-gray-800 disabled:text-gray-800/50 dark:text-gray-200 dark:disabled:text-gray-200/50"
+            >
+              <div class="flex gap-3 pl-4 pr-5">
+                <DownloadIcon :class="isOversize ? 'disabled' : ''" />PNG
               </div>
             </Button>
           </div>
@@ -53,8 +73,10 @@
   const color = ref('');
   const background = ref('');
   const size = ref(0);
+  const isOversize = ref(false);
 
   const SIZE = 140;
+  const MAX_SIZE = 10000;
 
   const { selectedContent, updateSelectedContent } = useSelectedContentState();
 
@@ -69,7 +91,19 @@
     },
   );
 
-  const changeImage = () => {
+  watch(id, () => {
+    const hash = charToHash(id.value);
+    const options: Options = {
+      size: SIZE,
+      type: 'normal',
+    };
+    const bitIcon = new BitIcon(hash, options);
+    color.value = bitIcon.color;
+    background.value = bitIcon.background;
+    src.value = bitIcon.toSvg();
+  });
+
+  watch([color, background], () => {
     const hash = charToHash(id.value);
     const options: Options = {
       size: SIZE,
@@ -78,12 +112,15 @@
       type: 'normal',
     };
     const bitIcon = new BitIcon(hash, options);
-    const svg = bitIcon.toSvg();
-    src.value = svg;
-  };
+    src.value = bitIcon.toSvg();
+  });
 
-  watch([id, color, background, size], () => {
-    changeImage();
+  watch(size, () => {
+    if (size.value > MAX_SIZE) {
+      isOversize.value = true;
+    } else {
+      isOversize.value = false;
+    }
   });
 
   const handleClose = () => {

@@ -4,10 +4,10 @@
 
 @layer components {
   .btn-icon-fill {
-    @apply fill-gray-500 dark:fill-gray-200 [.selected>&]:fill-gray-700 dark:[.selected>&]:fill-gray-200;
+    @apply fill-gray-500 dark:fill-gray-200 [.selected>&]:fill-gray-700 dark:[.selected>&]:fill-gray-200 [.disabled>&]:fill-gray-500/50 dark:[.disabled>&]:fill-gray-200/50;
   }
   .btn-bg {
-    @apply hover:bg-gray-400/10 dark:hover:bg-gray-500/20 active:bg-gray-400/30 dark:active:bg-gray-500/40;
+    @apply hover:bg-gray-400/10 dark:hover:bg-gray-500/20 active:bg-gray-400/30 dark:active:bg-gray-500/40 hover:disabled:bg-transparent dark:hover:disabled:bg-transparent active:disabled:bg-transparent dark:active:disabled:bg-transparent;
   }
 
   .btn-bg-selected {
