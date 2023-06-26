@@ -5,11 +5,12 @@
 
 <script setup lang="ts">
   import { isLocalStorageAvailable } from './utils/isLocalStorageAvailable';
+  import { darkmode } from './utils/darkmode';
 
   const { settingInfo, updateSettingInfo } = useSettingInfoState();
 
   useHead({
-    script: [{ src: '/utils/darkmode.js' }],
+    script: [{ innerHTML: `${darkmode()}` }],
     bodyAttrs: { class: 'bg-gray-100 dark:bg-gray-700' },
   });
 

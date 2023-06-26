@@ -1,4 +1,5 @@
-(() => {
+export const darkmode = () => {
+  return `(() => {
   const isLocalStorageAvailable = () => {
     try {
       localStorage.setItem('test', 'test');
@@ -28,4 +29,5 @@
       setDarkClass();
     }
   }
-})();
+})();`;
+};
