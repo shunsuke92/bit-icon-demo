@@ -9,7 +9,7 @@
   const { settingInfo, updateSettingInfo } = useSettingInfoState();
 
   useHead({
-    script: [{ src: '/utils/darkmode.ts' }],
+    script: [{ src: '/utils/darkmode.js' }],
     bodyAttrs: { class: 'bg-gray-100 dark:bg-gray-700' },
   });
 
