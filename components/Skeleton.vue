@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center">
     <div
-      class="bg-gray-300 dark:bg-gray-500"
+      class="bg-white"
       :class="settingInfo.roundness"
       :style="`width: ${getSize()}px; height: ${getSize()}px;`"
     ></div>
