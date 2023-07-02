@@ -12,6 +12,7 @@ export const darkmode = () => {
 
   const setDarkClass = () => {
     document.documentElement.classList.add('dark');
+    document.documentElement.style.colorScheme = 'dark';
   };
 
   const isSystemDarkmode = window.matchMedia('(prefers-color-scheme: dark)').matches;

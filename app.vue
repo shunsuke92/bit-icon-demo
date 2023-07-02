@@ -35,9 +35,9 @@
       (settingInfo.value.darkMode === 'system' &&
         window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
-      useHead({ htmlAttrs: { class: 'dark' } });
+      useHead({ htmlAttrs: { class: 'dark', style: 'color-scheme: dark' } });
     } else {
-      useHead({ htmlAttrs: { class: '' } });
+      useHead({ htmlAttrs: { class: '', style: '' } });
     }
 
     // set localStorage
