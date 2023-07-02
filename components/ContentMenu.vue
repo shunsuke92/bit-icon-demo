@@ -31,7 +31,7 @@
               :class="isOversize && 'border-red-600 focus:border-red-600  focus:ring-red-600'"
             />
             <span v-if="isOversize" class="Class Properties text-sm text-red-600"
-              >{{ MAX_SIZE }}以下で入力してください</span
+              >The size limit is {{ MAX_SIZE.toLocaleString() }}</span
             >
           </div>
         </div>
