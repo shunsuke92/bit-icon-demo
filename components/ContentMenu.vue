@@ -73,7 +73,7 @@
   const color = ref('');
   const background = ref('');
   const size = ref(0);
-  const isOversize = ref(false);
+  const skipToNext = ref(false);
 
   const SIZE = 140;
   const MAX_SIZE = 10000;
@@ -91,39 +91,60 @@
     },
   );
 
-  watch(id, () => {
-    const hash = charToHash(id.value);
-    const options: Options = {
-      size: SIZE,
-      type: 'normal',
-    };
-    const bitIcon = new BitIcon(hash, options);
-    color.value = bitIcon.color;
-    background.value = bitIcon.background;
-    src.value = bitIcon.toSvg();
-  });
+  watch(
+    [id, color, background],
+    ([newId, newColor, newBackground], [oldId, oldColor, oldBackground]) => {
+      if (skipToNext.value) {
+        skipToNext.value = false;
+        return;
+      }
+      if (newId === '' || newColor === '' || newBackground === '') return;
+      if (newId !== oldId && newColor !== oldColor && newBackground !== oldBackground) {
+        const hash = charToHash(id.value);
+        const options: Options = {
+          size: SIZE,
+          color: color.value,
+          background: background.value,
+          type: 'normal',
+        };
+        const bitIcon = new BitIcon(hash, options);
+        src.value = bitIcon.toSvg();
+      } else if (newId !== oldId) {
+        const hash = charToHash(id.value);
+        const options: Options = {
+          size: SIZE,
+          type: 'normal',
+        };
+        const bitIcon = new BitIcon(hash, options);
+        color.value = bitIcon.color;
+        background.value = bitIcon.background;
+        src.value = bitIcon.toSvg();
 
-  watch([color, background], () => {
-    const hash = charToHash(id.value);
-    const options: Options = {
-      size: SIZE,
-      color: color.value,
-      background: background.value,
-      type: 'normal',
-    };
-    const bitIcon = new BitIcon(hash, options);
-    src.value = bitIcon.toSvg();
-  });
+        // color,backgroundを変更することによる余計なwatchをスキップする
+        skipToNext.value = true;
+      } else if (newColor !== oldColor || newBackground !== oldBackground) {
+        const hash = charToHash(id.value);
+        const options: Options = {
+          size: SIZE,
+          color: color.value,
+          background: background.value,
+          type: 'normal',
+        };
+        const bitIcon = new BitIcon(hash, options);
+        src.value = bitIcon.toSvg();
+      }
+    },
+  );
 
-  watch(size, () => {
-    if (size.value > MAX_SIZE) {
-      isOversize.value = true;
-    } else {
-      isOversize.value = false;
-    }
+  const isOversize = computed(() => {
+    return size.value > MAX_SIZE;
   });
 
   const handleClose = () => {
+    id.value = '';
+    color.value = '';
+    background.value = '';
+    size.value = 0;
     updateSelectedContent(undefined);
   };
 
