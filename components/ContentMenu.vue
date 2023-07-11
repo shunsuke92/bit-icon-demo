@@ -15,11 +15,11 @@
         </div>
         <div class="flex flex-col gap-1">
           <div class="text-gray-800 dark:text-gray-200">Color</div>
-          <input type="color" v-model="color" class="input w-36" />
+          <input type="color" v-model="color" class="input w-36 cursor-pointer" />
         </div>
         <div class="flex flex-col gap-1">
           <div class="text-gray-800 dark:text-gray-200">Background</div>
-          <input type="color" v-model="background" class="input w-36" />
+          <input type="color" v-model="background" class="input w-36 cursor-pointer" />
         </div>
         <div class="flex flex-col gap-1">
           <div class="text-gray-800 dark:text-gray-200">Size</div>
